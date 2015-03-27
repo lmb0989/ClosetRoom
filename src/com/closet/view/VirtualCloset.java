@@ -6,6 +6,8 @@
 package com.closet.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JScrollBar;
 
 /**
@@ -22,6 +24,8 @@ public class VirtualCloset extends javax.swing.JFrame {
         centerPanel.add(new UserPanel(), BorderLayout.CENTER);
         JScrollBar bar = jScrollPane1.getVerticalScrollBar();
         bar.setUnitIncrement(12);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((screenSize.width-getPreferredSize().width)/2, (screenSize.height-getPreferredSize().height)/2);
     }
 
     /**
@@ -37,7 +41,7 @@ public class VirtualCloset extends javax.swing.JFrame {
         centerPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1024, 800));
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 

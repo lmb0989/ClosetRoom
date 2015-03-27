@@ -20,6 +20,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class ImageBean implements PersistentObject, ObjectMapper {
@@ -191,14 +192,13 @@ public class ImageBean implements PersistentObject, ObjectMapper {
         
         public Image getPreviewImage(int size) {
             try {
-                System.out.println("fileName::"+this.fileName);
                 Image image =  ImageIO.read(new File(DBConfig.imageLocation + "/" + this.fileName));
                 if(size<=0){
                     return image;
                 }
                 return ImageUtil.getResizedImage(image, size);
             } catch (IOException ex) {
-                System.out.println("fileName::"+this.fileName);
+                JOptionPane.showMessageDialog(null,this.fileName.split("|")[1] + "格式不正确\n 请检查图片是否正确", "图片解析出错", JOptionPane.WARNING_MESSAGE);
                 ex.printStackTrace();
             }
             return null;

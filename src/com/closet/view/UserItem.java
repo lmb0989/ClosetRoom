@@ -8,9 +8,13 @@ package com.closet.view;
 import com.closet.model.ImageBean;
 import com.closet.model.UserBean;
 import com.closet.util.TransferUtil;
+import com.closet.util.gui.GUITools;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -23,11 +27,11 @@ public class UserItem extends javax.swing.JPanel {
      * Creates new form UserItem
      * @param user
      */
-    
-    int imageWidth, imageHeight;
+    UserBean user;
     
     public UserItem(UserBean user) {
         initComponents();
+        this.user = user;
         this.userName.setText(user.userName);
         if(user.sex != null){
             this.sex.setText(user.sex.equalsIgnoreCase("M") ? "ÄÐ" : "Å®");
@@ -48,21 +52,28 @@ public class UserItem extends javax.swing.JPanel {
 
     public JPanel addPreview(ImageBean image){
         final Image im = image.getPreviewImage(75);
-        JPanel panel = new JPanel(){
-            @Override
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(im, 0, 0, this);
-            }
-        };
-        imageWidth = im.getWidth(this);
-        imageHeight = im.getHeight(this);
-        System.out.println("imageWidth::"+imageWidth+"    imageHeight"+imageHeight);
-        Dimension d = new Dimension(imageWidth, imageHeight);
-        panel.setPreferredSize(d);
-        panel.setMinimumSize(d);
-        panel.setMaximumSize(d);
-        return panel;
+        if(im != null){
+            JPanel panel = new JPanel(){
+                @Override
+                public void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    g.drawImage(im, 0, 0, this);
+                }
+            };
+            int imageWidth = im.getWidth(this);
+            int imageHeight = im.getHeight(this);
+            System.out.println("imageWidth::"+imageWidth+"    imageHeight"+imageHeight);
+            Dimension d = new Dimension(imageWidth, imageHeight);
+            panel.setPreferredSize(d);
+            panel.setMinimumSize(d);
+            panel.setMaximumSize(d);
+            return panel;
+        }else{
+            JPanel panel = new JPanel(new BorderLayout());
+            JLabel label = new JLabel(image.fileName);
+            panel.add(label, BorderLayout.CENTER);
+            return panel;
+        }
     }
     
     /**
@@ -185,7 +196,11 @@ public class UserItem extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        MakeVideoPanel makeVideo = new MakeVideoPanel(user);
+        makeVideo.setName("´îÅäÍÆ¼ö");
+        JDialog dialog = GUITools.showAsDialog(makeVideo, "CaseBook", true);
+        dialog.setSize(new Dimension(800, 600));
+        dialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
