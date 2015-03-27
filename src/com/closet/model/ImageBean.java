@@ -191,12 +191,14 @@ public class ImageBean implements PersistentObject, ObjectMapper {
         
         public Image getPreviewImage(int size) {
             try {
+                System.out.println("fileName::"+this.fileName);
                 Image image =  ImageIO.read(new File(DBConfig.imageLocation + "/" + this.fileName));
                 if(size<=0){
                     return image;
                 }
                 return ImageUtil.getResizedImage(image, size);
             } catch (IOException ex) {
+                System.out.println("fileName::"+this.fileName);
                 ex.printStackTrace();
             }
             return null;
