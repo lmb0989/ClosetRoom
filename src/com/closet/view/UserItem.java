@@ -95,6 +95,7 @@ public class UserItem extends javax.swing.JPanel {
         waist = new javax.swing.JLabel();
         hip = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         userName = new javax.swing.JLabel();
@@ -154,7 +155,10 @@ public class UserItem extends javax.swing.JPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 5, 0));
 
-        jButton1.setText("搭配推荐");
+        jButton2.setText("上传图片");
+        jPanel5.add(jButton2);
+
+        jButton1.setText("上传视频");
         jButton1.setPreferredSize(new java.awt.Dimension(81, 20));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,8 +201,8 @@ public class UserItem extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         MakeVideoPanel makeVideo = new MakeVideoPanel(user);
-        makeVideo.setName("搭配推荐");
-        JDialog dialog = GUITools.showAsDialog(makeVideo, "CaseBook", true);
+        makeVideo.setName("上传视频");
+        JDialog dialog = GUITools.showAsDialog(makeVideo, true);
         dialog.setSize(new Dimension(800, 600));
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -210,6 +214,7 @@ public class UserItem extends javax.swing.JPanel {
     private javax.swing.JLabel height;
     private javax.swing.JLabel hip;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
