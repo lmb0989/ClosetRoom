@@ -5,13 +5,26 @@
  */
 package com.closet.view;
 
+import com.closet.config.DBConfig;
 import com.closet.model.ImageBean;
 import com.closet.model.UserBean;
+import com.closet.util.ApplicationConfig;
 import com.closet.util.gui.WrapLayout;
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,6 +40,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     String season = ALLSEASON;
     String type = ALLTYPE;
     ArrayList<ImageBean> allUserImage = new ArrayList<ImageBean>();
+    ArrayList<ImageBean> selectImages = new ArrayList<ImageBean>();
 
     /**
      * Creates new form MakeVideoPanel
@@ -70,14 +84,16 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     }
     
     public void setUserImageDisplay(List<ImageBean> imageList){
-        imagesPanel.removeAll();
-        for(ImageBean image : imageList){
-            final Image im = image.getPreviewImage(150);
-            if(im != null){
-                SelectImagePanel selectPanel = new SelectImagePanel(im) {
+        clear();
+        for(final ImageBean im : imageList){
+            final Image image = im.getPreviewImage(150);
+            if(image != null){
+                SelectImagePanel selectPanel = new SelectImagePanel(image) {
                     @Override
                     public void selectChanged(boolean isSelect) {
-                        System.out.println("选择了吗？ "+isSelect);
+                        if(isSelect){
+                            selectImages.add(im);
+                        }
                     }
                 };
                 imagesPanel.add(selectPanel);
@@ -86,6 +102,11 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         imagesPanel.validate();
         imagesPanel.repaint();
         
+    }
+    
+    private void clear(){
+        imagesPanel.removeAll();
+        selectImages.clear();
     }
     
     /**
@@ -127,6 +148,9 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         imagesPanel = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
 
@@ -291,18 +315,43 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         imagesPanel.setLayout(imagesPanelLayout);
         imagesPanelLayout.setHorizontalGroup(
             imagesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         imagesPanelLayout.setVerticalGroup(
             imagesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+            .addGap(0, 212, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(imagesPanel);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jButton2.setText("将所选文件导出到....");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jButton2);
+
+        jPanel2.add(jPanel9, java.awt.BorderLayout.SOUTH);
+
         add(jPanel2);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 8, Short.MAX_VALUE)
+        );
+
+        add(jPanel8);
 
         jButton1.setText("完成");
         jPanel3.add(jButton1);
@@ -408,6 +457,62 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_coatActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        File savePath = new File(ApplicationConfig.getConfig("save.path", "D:\\"));
+        JFileChooser fileChooser = new JFileChooser(savePath);
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        while (true) {
+            int rVal = fileChooser.showSaveDialog(this);                 //类指当前你编写的类名
+            if (rVal == JFileChooser.APPROVE_OPTION) {
+                if (fileChooser.getSelectedFile().getParent().equals("::{20D04FE0-3AEA-1069-A2D8-08002B30309D}")) {
+                    JOptionPane.showMessageDialog(this, "无法保存到此处，请选择其他位置", "另存为", JOptionPane.WARNING_MESSAGE);
+                }else{
+                    ApplicationConfig.saveConfig("save.path", fileChooser.getSelectedFile().getParent());
+                    savePath = fileChooser.getSelectedFile();
+                    break;
+                }
+            } else {
+                savePath = null;
+                break;
+            }
+        }
+        
+        if(savePath != null){
+            for(ImageBean image : selectImages){
+                File saveFile = new File(savePath, image.imageName);
+                if(saveFile.exists()){
+                    int res = JOptionPane.showConfirmDialog(this, "该目录下的"+image.imageName+"文件已存在\n是否覆盖？", "文件重名", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                    if(res == JOptionPane.NO_OPTION ){
+                        continue;
+                    }
+                }
+                copy((new File(DBConfig.vedioLocation+"/"+image.fileName)), saveFile);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public static void copy(File source, File dest){
+        FileInputStream fin = null;
+        try {
+            fin = new FileInputStream(source);
+            BufferedInputStream in = new BufferedInputStream(fin);
+            FileOutputStream fout = new FileOutputStream(dest);
+            BufferedOutputStream out = new BufferedOutputStream(fout);
+            int a;
+            while ((a = in.read()) != -1) {
+                out.write(a);
+            }   out.flush();
+            out.flush();
+            fout.flush();
+            fout.close();
+            fin.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton allSeason;
@@ -421,6 +526,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton gentry;
     private javax.swing.JPanel imagesPanel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -433,6 +539,8 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton relaxation;
     private javax.swing.ButtonGroup seasonButtonGroup;
