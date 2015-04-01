@@ -319,28 +319,28 @@ public class MakeVideoPanel extends javax.swing.JPanel {
 
     private void relaxationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relaxationActionPerformed
         if(relaxation.isSelected()){
-            style = "relaxation";
+            style = "LEISURE";
             stateChanged();
         }
     }//GEN-LAST:event_relaxationActionPerformed
 
     private void gentryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gentryActionPerformed
         if(gentry.isSelected()){
-            style = "gentry";
+            style = "GENTLEMAN";
             stateChanged();
         }
     }//GEN-LAST:event_gentryActionPerformed
 
     private void businessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_businessActionPerformed
         if(business.isSelected()){
-            style = "business";
+            style = "BUSINESS";
             stateChanged();
         }
     }//GEN-LAST:event_businessActionPerformed
 
     private void fashionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fashionActionPerformed
         if(fashion.isSelected()){
-            style = "fashion";
+            style = "FASHION";
             stateChanged();
         }
     }//GEN-LAST:event_fashionActionPerformed
@@ -354,28 +354,28 @@ public class MakeVideoPanel extends javax.swing.JPanel {
 
     private void springActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_springActionPerformed
         if(spring.isSelected()){
-            season = "spring";
+            season = "SPRING";
             stateChanged();
         }
     }//GEN-LAST:event_springActionPerformed
 
     private void summerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_summerActionPerformed
         if(summer.isSelected()){
-            season = "summer";
+            season = "SUMMER";
             stateChanged();
         }
     }//GEN-LAST:event_summerActionPerformed
 
     private void autumnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autumnActionPerformed
         if(autumn.isSelected()){
-            season = "autumn";
+            season = "AUTUMN";
             stateChanged();
         }
     }//GEN-LAST:event_autumnActionPerformed
 
     private void winterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_winterActionPerformed
         if(winter.isSelected()){
-            season = "winter";
+            season = "WINTER";
             stateChanged();
         }
     }//GEN-LAST:event_winterActionPerformed
@@ -389,21 +389,21 @@ public class MakeVideoPanel extends javax.swing.JPanel {
 
     private void blouseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blouseActionPerformed
         if(blouse.isSelected()){
-            type = "blouse";
+            type = "SLEEVED";
             stateChanged();
         }
     }//GEN-LAST:event_blouseActionPerformed
 
     private void trousersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trousersActionPerformed
         if(trousers.isSelected()){
-            type = "trousers";
+            type = "TROUSERS";
             stateChanged();
         }
     }//GEN-LAST:event_trousersActionPerformed
 
     private void coatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coatActionPerformed
         if(coat.isSelected()){
-            type = "coat";
+            type = "OVERCOAT";
             stateChanged();
         }
     }//GEN-LAST:event_coatActionPerformed

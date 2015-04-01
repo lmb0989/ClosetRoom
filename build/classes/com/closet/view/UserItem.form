@@ -133,9 +133,14 @@
                 <Property name="alignment" type="int" value="2"/>
               </Layout>
               <SubComponents>
+                <Component class="javax.swing.JButton" name="jButton2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x4e0a;&#x4f20;&#x56fe;&#x7247;"/>
+                  </Properties>
+                </Component>
                 <Component class="javax.swing.JButton" name="jButton1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x642d;&#x914d;&#x63a8;&#x8350;"/>
+                    <Property name="text" type="java.lang.String" value="&#x4e0a;&#x4f20;&#x89c6;&#x9891;"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[81, 20]"/>
                     </Property>
