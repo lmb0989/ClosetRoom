@@ -1,8 +1,12 @@
 package com.closet.util.gui;
 
+import com.closet.util.ApplicationConfig;
+import com.closet.util.ImageUtil;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
@@ -11,15 +15,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -325,7 +332,7 @@ public class GUITools {
     public static JFrame mainFrame;
 
     public static void mainFrameLauncher(final String appName, final String title, final MainFrameCreator frameCreator, final int w, final int h, LookAndFeel lookAndFeel) {
-        System.setProperty("Application", appName);
+        ApplicationConfig.saveConfig("Application", appName);
         try {
             javax.swing.UIManager.setLookAndFeel(lookAndFeel);
             JFrame.setDefaultLookAndFeelDecorated(true);
@@ -389,7 +396,7 @@ public class GUITools {
      * @return 返回所选择文件
      */
     public static File showOpenDialog(Component c, FileFilter fileFilters[] ,boolean isAcceptAllFile, String dialogTitle, int FileSelectionMode){
-        String openPath = System.getProperty("dir.path", "D:/");
+        String openPath = ApplicationConfig.getConfig("dir.path", "D:/");
         JFileChooser fileChooser = new JFileChooser(openPath);
         
         fileChooser.setAcceptAllFileFilterUsed(isAcceptAllFile);
@@ -406,9 +413,41 @@ public class GUITools {
         int returnValue = fileChooser.showOpenDialog(c);
         if(returnValue == JFileChooser.APPROVE_OPTION){
             File returnFile = fileChooser.getSelectedFile();
-            System.getProperty("dir.path", returnFile.getPath());
+            ApplicationConfig.saveConfig("dir.path", returnFile.getPath());
             return returnFile;
         }        
+        return null;
+    }
+    
+    public static JPanel addPreviewPanel(String imageFile, int size){
+        try {
+            System.out.println("imageFile>>> "+imageFile);
+            Image image =  ImageIO.read(new File(imageFile));
+            if(size > 0){
+                image = ImageUtil.getResizedImage(image, size);
+            }
+        
+            if(image != null){
+                final Image im = image;
+                JPanel panel = new JPanel(){
+                    @Override
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawImage(im, 0, 0, this);
+                    }
+                };
+                int imageWidth = image.getWidth(null);
+                int imageHeight = image.getHeight(null);
+                System.out.println("imageWidth::"+imageWidth+"    imageHeight"+imageHeight);
+                Dimension d = new Dimension(imageWidth, imageHeight);
+                panel.setPreferredSize(d);
+                panel.setMinimumSize(d);
+                panel.setMaximumSize(d);
+                return panel;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         return null;
     }
 }

@@ -28,6 +28,7 @@ public class UserItem extends javax.swing.JPanel {
      * @param user
      */
     UserBean user;
+    String statusText = "<html><font color='red'>存在未建模对象</font></html>";
     
     public UserItem(UserBean user) {
         initComponents();
@@ -45,9 +46,18 @@ public class UserItem extends javax.swing.JPanel {
         this.waist.setText("腰围："+TransferUtil.null2String(user.waist));
         this.hip.setText("臀围："+TransferUtil.null2String(user.hip));
         for(ImageBean image : user.getUserAllImage()){
+            setStauusVisible(image.afterDeal.isEmpty());
             previewPanel.add(addPreview(image));
         }
         
+    }
+    
+    public void setStauusVisible(boolean visible){
+        if(visible){
+            status.setText(statusText);
+        }else{
+            status.setText("");
+        }
     }
 
     public JPanel addPreview(ImageBean image){
@@ -85,6 +95,16 @@ public class UserItem extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        userName = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        sex = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        age = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        status = new javax.swing.JLabel();
+        previewPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -97,35 +117,70 @@ public class UserItem extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        userName = new javax.swing.JLabel();
-        sex = new javax.swing.JLabel();
-        age = new javax.swing.JLabel();
-        previewPanel = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        setMaximumSize(new java.awt.Dimension(2147483647, 100));
-        setMinimumSize(new java.awt.Dimension(0, 100));
-        setPreferredSize(new java.awt.Dimension(563, 100));
+        setMaximumSize(new java.awt.Dimension(2147483647, 140));
+        setMinimumSize(new java.awt.Dimension(0, 140));
+        setPreferredSize(new java.awt.Dimension(563, 140));
         setLayout(new java.awt.BorderLayout());
+
+        jPanel2.setMaximumSize(new java.awt.Dimension(70, 32767));
+        jPanel2.setMinimumSize(new java.awt.Dimension(70, 0));
+        jPanel2.setPreferredSize(new java.awt.Dimension(70, 30));
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        userName.setFont(new java.awt.Font("黑体", 1, 18)); // NOI18N
+        userName.setText("userName");
+        jPanel7.add(userName);
+
+        jLabel2.setText("  ");
+        jPanel7.add(jLabel2);
+
+        sex.setText("sex");
+        sex.setPreferredSize(null);
+        jPanel7.add(sex);
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator1.setPreferredSize(new java.awt.Dimension(2, 20));
+        jPanel7.add(jSeparator1);
+
+        age.setText("age");
+        age.setPreferredSize(null);
+        jPanel7.add(age);
+
+        jPanel2.add(jPanel7);
+
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 5, 0));
+        jPanel8.add(status);
+
+        jPanel2.add(jPanel8);
+
+        add(jPanel2, java.awt.BorderLayout.NORTH);
+
+        previewPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
+        add(previewPanel, java.awt.BorderLayout.CENTER);
 
         jPanel1.setMaximumSize(new java.awt.Dimension(32767, 20));
         jPanel1.setMinimumSize(new java.awt.Dimension(0, 20));
-        jPanel1.setPreferredSize(new java.awt.Dimension(563, 20));
+        jPanel1.setPreferredSize(new java.awt.Dimension(563, 30));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel3.setMaximumSize(new java.awt.Dimension(32767, 4));
+        jPanel3.setMinimumSize(new java.awt.Dimension(0, 4));
         jPanel3.setPreferredSize(new java.awt.Dimension(243, 4));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 547, Short.MAX_VALUE)
+            .addGap(0, 543, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 4, Short.MAX_VALUE)
         );
 
         jPanel1.add(jPanel3);
@@ -155,7 +210,12 @@ public class UserItem extends javax.swing.JPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 5, 0));
 
-        jButton2.setText("上传图片");
+        jButton2.setText("建模");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel5.add(jButton2);
 
         jButton1.setText("上传视频");
@@ -172,31 +232,6 @@ public class UserItem extends javax.swing.JPanel {
         jPanel1.add(jPanel6);
 
         add(jPanel1, java.awt.BorderLayout.SOUTH);
-
-        jPanel2.setMaximumSize(new java.awt.Dimension(70, 32767));
-        jPanel2.setMinimumSize(new java.awt.Dimension(70, 0));
-        jPanel2.setPreferredSize(new java.awt.Dimension(70, 0));
-        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
-
-        userName.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
-        userName.setText("userName");
-        userName.setPreferredSize(new java.awt.Dimension(50, 30));
-        jPanel2.add(userName);
-
-        sex.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
-        sex.setText("sex");
-        sex.setPreferredSize(new java.awt.Dimension(50, 30));
-        jPanel2.add(sex);
-
-        age.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
-        age.setText("age");
-        age.setPreferredSize(new java.awt.Dimension(50, 30));
-        jPanel2.add(age);
-
-        add(jPanel2, java.awt.BorderLayout.WEST);
-
-        previewPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
-        add(previewPanel, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -207,6 +242,14 @@ public class UserItem extends javax.swing.JPanel {
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        MakeModePanel makeMode = new MakeModePanel(user);
+        makeMode.setName("建模");
+        JDialog dialog = GUITools.showAsDialog(makeMode, true);
+        dialog.setSize(new Dimension(800, 600));
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel age;
@@ -215,14 +258,19 @@ public class UserItem extends javax.swing.JPanel {
     private javax.swing.JLabel hip;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel previewPanel;
     private javax.swing.JLabel sex;
+    private javax.swing.JLabel status;
     private javax.swing.JLabel userName;
     private javax.swing.JLabel waist;
     private javax.swing.JLabel weight;

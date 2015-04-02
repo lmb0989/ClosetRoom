@@ -42,11 +42,12 @@ public class ImageBean implements PersistentObject, ObjectMapper {
 	public String style = "";			//风格
 	public String season = "";			//适合季节
 	public String type = "";			//类型
-	public String situation = "";		//适合场合
+	public String situation = "";                   //适合场合
 	public ArrayList<Integer> videoIDS;
 	public String fileName = "";
+        public String afterDeal = "";
 //	public String labels = "";
-	
+        
 	private static DatabaseDao db= new DatabaseDao();
 	
 	public ImageBean(){ }
@@ -168,7 +169,7 @@ public class ImageBean implements PersistentObject, ObjectMapper {
 	
 	public ObjectMapper mapping(ResultSet rs) {
 		try {
-			this.imageId = rs.getInt("imageid");
+                this.imageId = rs.getInt("imageid");
         	this.userName = rs.getString("username");
         	this.imageName = rs.getString("imagename");
         	this.season = rs.getString("season");
@@ -178,6 +179,7 @@ public class ImageBean implements PersistentObject, ObjectMapper {
         	this.situation = rs.getString("situation");
         	this.videoIDS = StringUtil.string2List(rs.getString("videoidS"), "v");
         	this.fileName = rs.getString("filename");
+        	this.afterDeal = rs.getString("afterdeal");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -196,6 +198,7 @@ public class ImageBean implements PersistentObject, ObjectMapper {
 		image.situation = this.situation;
 		image.videoIDS = this.videoIDS;
 		image.fileName = this.fileName;
+		image.afterDeal = this.afterDeal;
 		return image;
 	}
         

@@ -8,16 +8,12 @@ package com.closet.view;
 import com.closet.config.DBConfig;
 import com.closet.model.ImageBean;
 import com.closet.model.UserBean;
+import com.closet.util.ApplicationConfig;
+import com.closet.util.FileUtil;
 import com.closet.util.gui.WrapLayout;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
@@ -90,6 +86,8 @@ public class MakeVideoPanel extends javax.swing.JPanel {
                     public void selectChanged(boolean isSelect) {
                         if(isSelect){
                             selectImages.add(im);
+                        }else{
+                            if(selectImages.contains(im)) selectImages.remove(im);
                         }
                     }
                 };
@@ -464,7 +462,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "未选择任何图片", "提示", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        File savePath = new File(System.getProperty("save.path", "D:\\"));
+        File savePath = new File(ApplicationConfig.getConfig("save.path", "D:\\"));
         JFileChooser fileChooser = new JFileChooser(savePath);
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -474,7 +472,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
                 if (fileChooser.getSelectedFile().getParent().equals("::{20D04FE0-3AEA-1069-A2D8-08002B30309D}")) {
                     JOptionPane.showMessageDialog(this, "无法保存到此处，请选择其他位置", "另存为", JOptionPane.WARNING_MESSAGE);
                 }else{
-                    System.setProperty("save.path", fileChooser.getSelectedFile().getPath());
+                    ApplicationConfig.saveConfig("save.path", fileChooser.getSelectedFile().getPath());
                     savePath = fileChooser.getSelectedFile();
                     break;
                 }
@@ -493,33 +491,12 @@ public class MakeVideoPanel extends javax.swing.JPanel {
                         continue;
                     }
                 }
-                copy((new File(DBConfig.imageLocation+"/"+image.fileName)), saveFile);
+                FileUtil.copy((new File(DBConfig.imageLocation+"/"+image.fileName)), saveFile);
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public static void copy(File source, File dest){
-        FileInputStream fin = null;
-        try {
-            System.out.println("source>>>>"+source);
-            fin = new FileInputStream(source);
-            BufferedInputStream in = new BufferedInputStream(fin);
-            FileOutputStream fout = new FileOutputStream(dest);
-            BufferedOutputStream out = new BufferedOutputStream(fout);
-            int a;
-            while ((a = in.read()) != -1) {
-                out.write(a);
-            }   out.flush();
-            out.flush();
-            fout.flush();
-            fout.close();
-            fin.close();
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton allSeason;
