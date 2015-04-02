@@ -1,6 +1,5 @@
 package com.closet.util.gui;
 
-import com.closet.util.ApplicationConfig;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -390,7 +389,7 @@ public class GUITools {
      * @return 返回所选择文件
      */
     public static File showOpenDialog(Component c, FileFilter fileFilters[] ,boolean isAcceptAllFile, String dialogTitle, int FileSelectionMode){
-        String openPath = ApplicationConfig.getConfig("dir.path", "D:/");
+        String openPath = System.getProperty("dir.path", "D:/");
         JFileChooser fileChooser = new JFileChooser(openPath);
         
         fileChooser.setAcceptAllFileFilterUsed(isAcceptAllFile);
@@ -407,7 +406,7 @@ public class GUITools {
         int returnValue = fileChooser.showOpenDialog(c);
         if(returnValue == JFileChooser.APPROVE_OPTION){
             File returnFile = fileChooser.getSelectedFile();
-            ApplicationConfig.saveConfig("dir.path", returnFile.getPath());
+            System.getProperty("dir.path", returnFile.getPath());
             return returnFile;
         }        
         return null;

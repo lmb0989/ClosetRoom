@@ -192,7 +192,7 @@ public class ImageBean implements PersistentObject, ObjectMapper {
 		image.season = this.season;
 		image.size = this.size;
 		image.style = this.style;
-		image.type = this.style;
+		image.type = this.type;
 		image.situation = this.situation;
 		image.videoIDS = this.videoIDS;
 		image.fileName = this.fileName;

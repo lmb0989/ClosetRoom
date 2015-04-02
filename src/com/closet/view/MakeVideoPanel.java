@@ -8,7 +8,6 @@ package com.closet.view;
 import com.closet.config.DBConfig;
 import com.closet.model.ImageBean;
 import com.closet.model.UserBean;
-import com.closet.util.ApplicationConfig;
 import com.closet.util.gui.WrapLayout;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -21,8 +20,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -303,6 +300,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
 
         add(jPanel1);
 
+        jPanel2.setPreferredSize(null);
         jPanel2.setLayout(new java.awt.BorderLayout(5, 0));
 
         jLabel5.setText("请选择要推荐的衣服：");
@@ -310,6 +308,9 @@ public class MakeVideoPanel extends javax.swing.JPanel {
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setPreferredSize(null);
+
+        imagesPanel.setPreferredSize(new java.awt.Dimension(500, 150));
 
         javax.swing.GroupLayout imagesPanelLayout = new javax.swing.GroupLayout(imagesPanel);
         imagesPanel.setLayout(imagesPanelLayout);
@@ -319,13 +320,14 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         );
         imagesPanelLayout.setVerticalGroup(
             imagesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 212, Short.MAX_VALUE)
+            .addGap(0, 171, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(imagesPanel);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jPanel9.setPreferredSize(null);
         jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jButton2.setText("将所选文件导出到....");
@@ -458,7 +460,11 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_coatActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        File savePath = new File(ApplicationConfig.getConfig("save.path", "D:\\"));
+        if(selectImages.size() <= 0){
+            JOptionPane.showMessageDialog(this, "未选择任何图片", "提示", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        File savePath = new File(System.getProperty("save.path", "D:\\"));
         JFileChooser fileChooser = new JFileChooser(savePath);
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -468,7 +474,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
                 if (fileChooser.getSelectedFile().getParent().equals("::{20D04FE0-3AEA-1069-A2D8-08002B30309D}")) {
                     JOptionPane.showMessageDialog(this, "无法保存到此处，请选择其他位置", "另存为", JOptionPane.WARNING_MESSAGE);
                 }else{
-                    ApplicationConfig.saveConfig("save.path", fileChooser.getSelectedFile().getParent());
+                    System.setProperty("save.path", fileChooser.getSelectedFile().getPath());
                     savePath = fileChooser.getSelectedFile();
                     break;
                 }
@@ -480,14 +486,14 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         
         if(savePath != null){
             for(ImageBean image : selectImages){
-                File saveFile = new File(savePath, image.imageName);
+                File saveFile = new File(savePath, image.fileName);
                 if(saveFile.exists()){
                     int res = JOptionPane.showConfirmDialog(this, "该目录下的"+image.imageName+"文件已存在\n是否覆盖？", "文件重名", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                     if(res == JOptionPane.NO_OPTION ){
                         continue;
                     }
                 }
-                copy((new File(DBConfig.vedioLocation+"/"+image.fileName)), saveFile);
+                copy((new File(DBConfig.imageLocation+"/"+image.fileName)), saveFile);
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -495,6 +501,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     public static void copy(File source, File dest){
         FileInputStream fin = null;
         try {
+            System.out.println("source>>>>"+source);
             fin = new FileInputStream(source);
             BufferedInputStream in = new BufferedInputStream(fin);
             FileOutputStream fout = new FileOutputStream(dest);
