@@ -131,7 +131,7 @@ public class ImageBean implements PersistentObject, ObjectMapper {
 		sb.append(",").append("season='").append(this.season).append("'");
 		sb.append(",").append("type='").append(this.type).append("'");
 		sb.append(",").append("situation='").append(this.situation).append("'");
-		sb.append(",").append("videoidS='").append(StringUtil.list2String(this.videoIDS, "v")).append("'");
+		sb.append(",").append("videoids='").append(StringUtil.list2String(this.videoIDS, "v")).append("'");
 		sb.append(" where imageid=").append(imageId);
 		String sql = sb.toString();
 		System.out.println("sql= "+sql);
@@ -162,7 +162,7 @@ public class ImageBean implements PersistentObject, ObjectMapper {
 			jsonObj.put("style", image.style);
 			jsonObj.put("type", image.type);
 			jsonObj.put("situation", image.situation);
-			jsonObj.put("videoidS", StringUtil.list2String(image.videoIDS, "v"));
+			jsonObj.put("videoids", StringUtil.list2String(image.videoIDS, "v"));
 		}catch(JSONException e){ }
 		return jsonObj;
 	}
@@ -177,7 +177,7 @@ public class ImageBean implements PersistentObject, ObjectMapper {
         	this.style = rs.getString("style");
         	this.type = rs.getString("type");
         	this.situation = rs.getString("situation");
-        	this.videoIDS = StringUtil.string2List(rs.getString("videoidS"), "v");
+        	this.videoIDS = StringUtil.string2List(rs.getString("videoids"), "v");
         	this.fileName = rs.getString("filename");
         	this.afterDeal = rs.getString("afterdeal");
 		} catch (SQLException e) {

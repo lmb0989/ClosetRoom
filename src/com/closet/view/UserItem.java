@@ -239,7 +239,7 @@ public class UserItem extends javax.swing.JPanel {
         MakeVideoPanel makeVideo = new MakeVideoPanel(user);
         makeVideo.setName("ÉÏ´«ÊÓÆµ");
         JDialog dialog = GUITools.showAsDialog(makeVideo, true);
-        dialog.setSize(new Dimension(800, 560));
+        dialog.setSize(new Dimension(800, 620));
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

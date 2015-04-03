@@ -39,11 +39,11 @@ public class VideoBean implements ObjectMapper, PersistentObject{
 	private static DatabaseDao db= new DatabaseDao();
 	
 	public VideoBean(){ }
-	public VideoBean(int videoId, String userName, String videoName, String style, String season, String type, String situation, String imageIDS){
-		this(videoId, userName, videoName, style, season, type, situation, StringUtil.string2List(imageIDS, "v" ));
+	public VideoBean(int videoId, String userName, String videoName, String style, String season, String type, String situation, String imageIDS, String fileName){
+		this(videoId, userName, videoName, style, season, type, situation, StringUtil.string2List(imageIDS, "v" ), fileName);
 	}
 	
-	public VideoBean(int videoId, String userName, String videoName, String style, String season, String type,String situation, ArrayList<Integer> imageIDS){
+	public VideoBean(int videoId, String userName, String videoName, String style, String season, String type,String situation, ArrayList<Integer> imageIDS, String fileName){
 		this.videoId = videoId;
 		this.userName = userName;
 		this.videoName = videoName;
@@ -52,6 +52,7 @@ public class VideoBean implements ObjectMapper, PersistentObject{
 		this.type = type;
 		this.situation = situation;
 		this.imageIDS = imageIDS;
+                this.fileName = fileName;
 	}
 	
 	public VideoBean(String strJSON) throws JSONException{
@@ -72,8 +73,7 @@ public class VideoBean implements ObjectMapper, PersistentObject{
 	public int create() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("insert into videos values(");
-		int videoSize = getAllVideo().size();
-		sb.append(videoSize + 1);
+		sb.append(this.videoId);
 		sb.append(",'").append(this.userName).append("'");
 		sb.append(",'").append(this.videoName).append("'");
 		sb.append(",'").append(this.style).append("'");
@@ -106,10 +106,12 @@ public class VideoBean implements ObjectMapper, PersistentObject{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static List<VideoBean> getAllVideo(){
-		String sql = "select * from videos ";
-		return (List<VideoBean>)db.queryList(sql, new VideoBean());
-	}
+	public static VideoBean getLastVideo(){
+            String sql = "select * from videos ";
+            List<VideoBean> videoList =  (List<VideoBean>)db.queryList(sql, new VideoBean());
+            if(videoList.size() <= 0) return null;
+            return videoList.get(videoList.size()-1);
+        }
 	
 	public void update(String key, String value) {
 		String sql = "update videos set "+ key +"='"+ value +"' where videoid="+ videoId;

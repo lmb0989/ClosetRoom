@@ -8,8 +8,10 @@ package com.closet.view;
 import com.closet.config.DBConfig;
 import com.closet.model.ImageBean;
 import com.closet.model.UserBean;
+import com.closet.model.VideoBean;
 import com.closet.util.ApplicationConfig;
 import com.closet.util.FileUtil;
+import com.closet.util.StringUtil;
 import com.closet.util.gui.GUITools;
 import com.closet.util.gui.MyDialog;
 import com.closet.util.gui.WrapLayout;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 /**
  *
@@ -37,12 +40,13 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     String type = ALLTYPE;
     String situation = ALLSITUATION;
     
-    String videoStyle = ALLSTYLE;
-    String videoSeason = ALLSEASON;
-    String videoType = ALLTYPE;
-    String videoSituation = ALLSITUATION;
+    String videoStyle = "LEISURE";
+    String videoSeason = "SPRING";
+    String videoType = "TROUSERS";
+    String videoSituation = "PUBLIC";
     ArrayList<ImageBean> allUserImage = new ArrayList<ImageBean>();
     ArrayList<ImageBean> selectImages = new ArrayList<ImageBean>();
+    UserBean user;
 
     /**
      * Creates new form MakeVideoPanel
@@ -50,6 +54,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
      */
     public MakeVideoPanel(UserBean user) {
         initComponents();
+        this.user = user;
         imagesPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
         addRadioToGroup();
         allUserImage = user.getUserAllImage();
@@ -57,20 +62,15 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     }
 
     private void addRadioToGroup(){
-        styleButtonGroup.add(allStyle);
-        styleButtonGroup.add(relaxation);
-        styleButtonGroup.add(gentry);
-        styleButtonGroup.add(business);
-        styleButtonGroup.add(fashion);
-        seasonButtonGroup.add(allSeason);
-        seasonButtonGroup.add(spring);
-        seasonButtonGroup.add(summer);
-        seasonButtonGroup.add(autumn);
-        seasonButtonGroup.add(winter);
-        typeButtonGroup.add(allType);
-        typeButtonGroup.add(blouse);
-        typeButtonGroup.add(trousers);
-        typeButtonGroup.add(coat);
+        styleButtonGroup.add(allStyle); styleButtonGroup.add(relaxation); styleButtonGroup.add(gentry); styleButtonGroup.add(business); styleButtonGroup.add(fashion);
+        seasonButtonGroup.add(allSeason); seasonButtonGroup.add(spring); seasonButtonGroup.add(summer); seasonButtonGroup.add(autumn); seasonButtonGroup.add(winter);
+        typeButtonGroup.add(allType); typeButtonGroup.add(blouse); typeButtonGroup.add(trousers); typeButtonGroup.add(coat);
+        situationButtonGroup.add(allSituation); situationButtonGroup.add(publicity); situationButtonGroup.add(office); situationButtonGroup.add(cocktail);
+        
+        videoStyleGroup.add(relaxation1); videoStyleGroup.add(gentry1); videoStyleGroup.add(business1); videoStyleGroup.add(fashion1);
+        videoSeasonGroup.add(spring1); videoSeasonGroup.add(summer1); videoSeasonGroup.add(autumn1); videoSeasonGroup.add(winter1);
+        videoTypeGroup.add(blouse1); videoTypeGroup.add(trousers1); videoTypeGroup.add(coat1);
+        videoSituationGroup.add(publicity1); videoSituationGroup.add(office1); videoSituationGroup.add(cocktail1);
     }
     
     private void stateChanged() {
@@ -78,7 +78,8 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         for(ImageBean image : allUserImage){
             if((style.equals(ALLSTYLE) || image.style.equalsIgnoreCase(style))  &&   
                (season.equals(ALLSEASON) || image.season.equalsIgnoreCase(season))  &&
-               (type.equals(ALLTYPE) || image.type.equalsIgnoreCase(type)) ){
+               (type.equals(ALLTYPE) || image.type.equalsIgnoreCase(type)) && 
+                (situation.equals(ALLSITUATION) || image.situation.equalsIgnoreCase(situation)) ){
                 list.add(image);
             }
         }
@@ -125,6 +126,11 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         styleButtonGroup = new javax.swing.ButtonGroup();
         seasonButtonGroup = new javax.swing.ButtonGroup();
         typeButtonGroup = new javax.swing.ButtonGroup();
+        situationButtonGroup = new javax.swing.ButtonGroup();
+        videoStyleGroup = new javax.swing.ButtonGroup();
+        videoSeasonGroup = new javax.swing.ButtonGroup();
+        videoTypeGroup = new javax.swing.ButtonGroup();
+        videoSituationGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -150,10 +156,10 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         coat = new javax.swing.JRadioButton();
         jPanel16 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        allType2 = new javax.swing.JRadioButton();
-        blouse2 = new javax.swing.JRadioButton();
-        trousers2 = new javax.swing.JRadioButton();
-        coat2 = new javax.swing.JRadioButton();
+        allSituation = new javax.swing.JRadioButton();
+        publicity = new javax.swing.JRadioButton();
+        office = new javax.swing.JRadioButton();
+        cocktail = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -166,24 +172,26 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        allStyle1 = new javax.swing.JRadioButton();
         relaxation1 = new javax.swing.JRadioButton();
         gentry1 = new javax.swing.JRadioButton();
         business1 = new javax.swing.JRadioButton();
         fashion1 = new javax.swing.JRadioButton();
         jPanel14 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        allSeason1 = new javax.swing.JRadioButton();
         spring1 = new javax.swing.JRadioButton();
         summer1 = new javax.swing.JRadioButton();
         autumn1 = new javax.swing.JRadioButton();
         winter1 = new javax.swing.JRadioButton();
         jPanel15 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        allType1 = new javax.swing.JRadioButton();
         blouse1 = new javax.swing.JRadioButton();
         trousers1 = new javax.swing.JRadioButton();
         coat1 = new javax.swing.JRadioButton();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        publicity1 = new javax.swing.JRadioButton();
+        office1 = new javax.swing.JRadioButton();
+        cocktail1 = new javax.swing.JRadioButton();
         jPanel11 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -341,38 +349,38 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         jLabel10.setText("场合：");
         jPanel16.add(jLabel10);
 
-        allType2.setSelected(true);
-        allType2.setText("全部");
-        allType2.addActionListener(new java.awt.event.ActionListener() {
+        allSituation.setSelected(true);
+        allSituation.setText("全部");
+        allSituation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                allType2ActionPerformed(evt);
+                allSituationActionPerformed(evt);
             }
         });
-        jPanel16.add(allType2);
+        jPanel16.add(allSituation);
 
-        blouse2.setText("公共场合");
-        blouse2.addActionListener(new java.awt.event.ActionListener() {
+        publicity.setText("公共场合");
+        publicity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                blouse2ActionPerformed(evt);
+                publicityActionPerformed(evt);
             }
         });
-        jPanel16.add(blouse2);
+        jPanel16.add(publicity);
 
-        trousers2.setText("办公室");
-        trousers2.addActionListener(new java.awt.event.ActionListener() {
+        office.setText("办公室");
+        office.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                trousers2ActionPerformed(evt);
+                officeActionPerformed(evt);
             }
         });
-        jPanel16.add(trousers2);
+        jPanel16.add(office);
 
-        coat2.setText("就会");
-        coat2.addActionListener(new java.awt.event.ActionListener() {
+        cocktail.setText("就会");
+        cocktail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coat2ActionPerformed(evt);
+                cocktailActionPerformed(evt);
             }
         });
-        jPanel16.add(coat2);
+        jPanel16.add(cocktail);
 
         jPanel1.add(jPanel16);
 
@@ -392,7 +400,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         imagesPanel.setLayout(imagesPanelLayout);
         imagesPanelLayout.setHorizontalGroup(
             imagesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 542, Short.MAX_VALUE)
+            .addGap(0, 563, Short.MAX_VALUE)
         );
         imagesPanelLayout.setVerticalGroup(
             imagesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,15 +441,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         jLabel7.setText("款式：");
         jPanel13.add(jLabel7);
 
-        allStyle1.setSelected(true);
-        allStyle1.setText("全部");
-        allStyle1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                allStyle1ActionPerformed(evt);
-            }
-        });
-        jPanel13.add(allStyle1);
-
+        relaxation1.setSelected(true);
         relaxation1.setText("休闲");
         relaxation1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -481,15 +481,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         jLabel8.setText("季节：");
         jPanel14.add(jLabel8);
 
-        allSeason1.setSelected(true);
-        allSeason1.setText("全部");
-        allSeason1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                allSeason1ActionPerformed(evt);
-            }
-        });
-        jPanel14.add(allSeason1);
-
+        spring1.setSelected(true);
         spring1.setText("春  ");
         spring1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -529,15 +521,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         jLabel9.setText("类型：");
         jPanel15.add(jLabel9);
 
-        allType1.setSelected(true);
-        allType1.setText("全部");
-        allType1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                allType1ActionPerformed(evt);
-            }
-        });
-        jPanel15.add(allType1);
-
+        blouse1.setSelected(true);
         blouse1.setText("衬衣");
         blouse1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -563,6 +547,38 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         jPanel15.add(coat1);
 
         jPanel10.add(jPanel15);
+
+        jPanel17.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel11.setText("场合：");
+        jPanel17.add(jLabel11);
+
+        publicity1.setSelected(true);
+        publicity1.setText("公共场合");
+        publicity1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                publicity1ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(publicity1);
+
+        office1.setText("办公室");
+        office1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                office1ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(office1);
+
+        cocktail1.setText("就会");
+        cocktail1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cocktail1ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(cocktail1);
+
+        jPanel10.add(jPanel17);
 
         jPanel8.add(jPanel10);
 
@@ -729,60 +745,48 @@ public class MakeVideoPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void allStyle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allStyle1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_allStyle1ActionPerformed
-
     private void relaxation1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relaxation1ActionPerformed
-        // TODO add your handling code here:
+        videoStyle = "LEISURE";
     }//GEN-LAST:event_relaxation1ActionPerformed
 
     private void gentry1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gentry1ActionPerformed
-        // TODO add your handling code here:
+        videoStyle = "GENTLEMAN";
     }//GEN-LAST:event_gentry1ActionPerformed
 
     private void business1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_business1ActionPerformed
-        // TODO add your handling code here:
+        videoStyle = "BUSINESS";
     }//GEN-LAST:event_business1ActionPerformed
 
     private void fashion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fashion1ActionPerformed
-        // TODO add your handling code here:
+        videoStyle = "FASHION ";
     }//GEN-LAST:event_fashion1ActionPerformed
 
-    private void allSeason1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allSeason1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_allSeason1ActionPerformed
-
     private void spring1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spring1ActionPerformed
-        // TODO add your handling code here:
+        videoSeason = "SPRING";
     }//GEN-LAST:event_spring1ActionPerformed
 
     private void summer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_summer1ActionPerformed
-        // TODO add your handling code here:
+        videoSeason = "SUMMER";
     }//GEN-LAST:event_summer1ActionPerformed
 
     private void autumn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autumn1ActionPerformed
-        // TODO add your handling code here:
+        videoSeason = "AUTUMN";
     }//GEN-LAST:event_autumn1ActionPerformed
 
     private void winter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_winter1ActionPerformed
-        // TODO add your handling code here:
+        videoSeason = "WINTER";
     }//GEN-LAST:event_winter1ActionPerformed
 
-    private void allType1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allType1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_allType1ActionPerformed
-
     private void blouse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blouse1ActionPerformed
-        // TODO add your handling code here:
+        videoType = "SLEEVED";
     }//GEN-LAST:event_blouse1ActionPerformed
 
     private void trousers1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trousers1ActionPerformed
-        // TODO add your handling code here:
+        videoType = "TROUSERS";
     }//GEN-LAST:event_trousers1ActionPerformed
 
     private void coat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coat1ActionPerformed
-        // TODO add your handling code here:
+        videoType = "OVERCOAT";
     }//GEN-LAST:event_coat1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -790,45 +794,85 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+        if(selectImages.size() <= 0){
+            JOptionPane.showMessageDialog(this, "请选选择图片文件", "提示", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        FileFilter[] filteres = new FileFilter[]{GUITools.getFileFilter()[1]};
+        File selectFile = GUITools.showOpenDialog(this, filteres, false, "选择视频文件", JFileChooser.FILES_ONLY);
+        if(selectFile != null){
+            VideoBean lastVideo = VideoBean.getLastVideo();
+            int videoId = lastVideo==null ? 1 : lastVideo.videoId+1;
+            System.out.println("videoId>>> "+videoId);
+            String videoName = selectFile.getName();
+            ArrayList<Integer> imageIdList = new ArrayList<Integer>();
+            for(ImageBean image : selectImages){
+                imageIdList.add(image.imageId);
+            }
+            String fileName = System.currentTimeMillis() + "-" + videoName;
+            VideoBean video = new VideoBean(videoId, user.userName, videoName, videoStyle, videoSeason, videoType, videoSituation, imageIdList, fileName);
+            int result = video.create();
+            if(result > 0){
+                FileUtil.copy(selectFile, new File(DBConfig.vedioLocation, fileName));
+                System.out.println("fileName>>> "+fileName);
+                for(ImageBean image : selectImages){
+                    image.videoIDS.add(videoId);
+                    image.update("videoids", StringUtil.list2String(image.videoIDS, "v"));
+                }
+                new MyDialog(null, "添加成功");
+            }else{
+                new MyDialog(null, "添加失败");
+            }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void allType2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allType2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_allType2ActionPerformed
+    private void allSituationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allSituationActionPerformed
+        situation = ALLSITUATION;
+        stateChanged();
+    }//GEN-LAST:event_allSituationActionPerformed
 
-    private void blouse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blouse2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_blouse2ActionPerformed
+    private void publicityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicityActionPerformed
+        situation = "PUBLIC";
+        stateChanged();
+    }//GEN-LAST:event_publicityActionPerformed
 
-    private void trousers2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trousers2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_trousers2ActionPerformed
+    private void officeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_officeActionPerformed
+        situation = "OFFICE";
+        stateChanged();
+    }//GEN-LAST:event_officeActionPerformed
 
-    private void coat2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coat2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_coat2ActionPerformed
+    private void cocktailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cocktailActionPerformed
+        situation = "COCKTAIL";
+        stateChanged();
+    }//GEN-LAST:event_cocktailActionPerformed
 
+    private void publicity1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicity1ActionPerformed
+        videoSituation = "PUBLIC";
+    }//GEN-LAST:event_publicity1ActionPerformed
 
+    private void office1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_office1ActionPerformed
+        videoSituation = "OFFICE";
+    }//GEN-LAST:event_office1ActionPerformed
+
+    private void cocktail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cocktail1ActionPerformed
+        videoSituation = "COCKTAIL";
+    }//GEN-LAST:event_cocktail1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton allSeason;
-    private javax.swing.JRadioButton allSeason1;
+    private javax.swing.JRadioButton allSituation;
     private javax.swing.JRadioButton allStyle;
-    private javax.swing.JRadioButton allStyle1;
     private javax.swing.JRadioButton allType;
-    private javax.swing.JRadioButton allType1;
-    private javax.swing.JRadioButton allType2;
     private javax.swing.JRadioButton autumn;
     private javax.swing.JRadioButton autumn1;
     private javax.swing.JRadioButton blouse;
     private javax.swing.JRadioButton blouse1;
-    private javax.swing.JRadioButton blouse2;
     private javax.swing.JRadioButton business;
     private javax.swing.JRadioButton business1;
     private javax.swing.JRadioButton coat;
     private javax.swing.JRadioButton coat1;
-    private javax.swing.JRadioButton coat2;
+    private javax.swing.JRadioButton cocktail;
+    private javax.swing.JRadioButton cocktail1;
     private javax.swing.JRadioButton fashion;
     private javax.swing.JRadioButton fashion1;
     private javax.swing.JRadioButton gentry;
@@ -839,6 +883,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -855,6 +900,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -864,9 +910,14 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton office;
+    private javax.swing.JRadioButton office1;
+    private javax.swing.JRadioButton publicity;
+    private javax.swing.JRadioButton publicity1;
     private javax.swing.JRadioButton relaxation;
     private javax.swing.JRadioButton relaxation1;
     private javax.swing.ButtonGroup seasonButtonGroup;
+    private javax.swing.ButtonGroup situationButtonGroup;
     private javax.swing.JRadioButton spring;
     private javax.swing.JRadioButton spring1;
     private javax.swing.ButtonGroup styleButtonGroup;
@@ -874,8 +925,11 @@ public class MakeVideoPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton summer1;
     private javax.swing.JRadioButton trousers;
     private javax.swing.JRadioButton trousers1;
-    private javax.swing.JRadioButton trousers2;
     private javax.swing.ButtonGroup typeButtonGroup;
+    private javax.swing.ButtonGroup videoSeasonGroup;
+    private javax.swing.ButtonGroup videoSituationGroup;
+    private javax.swing.ButtonGroup videoStyleGroup;
+    private javax.swing.ButtonGroup videoTypeGroup;
     private javax.swing.JRadioButton winter;
     private javax.swing.JRadioButton winter1;
     // End of variables declaration//GEN-END:variables
