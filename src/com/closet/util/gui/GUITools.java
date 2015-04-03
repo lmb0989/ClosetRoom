@@ -446,7 +446,7 @@ public class GUITools {
                 return panel;
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
         return null;
     }

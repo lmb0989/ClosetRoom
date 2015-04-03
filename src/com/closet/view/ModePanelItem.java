@@ -9,6 +9,7 @@ import com.closet.config.DBConfig;
 import com.closet.model.ImageBean;
 import com.closet.util.FileUtil;
 import com.closet.util.gui.GUITools;
+import com.closet.util.gui.MyDialog;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -78,7 +79,9 @@ public class ModePanelItem extends javax.swing.JPanel {
             toPanel.add(panel, BorderLayout.CENTER);
             toPanel.setBorder(null);
             toPanel.setToolTipText("点击更换模型");
+            toPanel.validate();
             toPanel.repaint();
+            new MyDialog(null, "更换成功");
         }
     }
 

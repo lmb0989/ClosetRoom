@@ -15,6 +15,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -210,7 +211,7 @@ public class UserItem extends javax.swing.JPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 5, 0));
 
-        jButton2.setText("建模");
+        jButton2.setText("服装建模");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -218,7 +219,7 @@ public class UserItem extends javax.swing.JPanel {
         });
         jPanel5.add(jButton2);
 
-        jButton1.setText("上传视频");
+        jButton1.setText("虚拟试衣");
         jButton1.setPreferredSize(new java.awt.Dimension(81, 20));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,11 +239,15 @@ public class UserItem extends javax.swing.JPanel {
         MakeVideoPanel makeVideo = new MakeVideoPanel(user);
         makeVideo.setName("上传视频");
         JDialog dialog = GUITools.showAsDialog(makeVideo, true);
-        dialog.setSize(new Dimension(800, 600));
+        dialog.setSize(new Dimension(800, 560));
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(user.getUserAllImage().size() <= 0){
+            JOptionPane.showMessageDialog(this, "该用户无需要建模的图片", "操作提示", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         MakeModePanel makeMode = new MakeModePanel(user);
         makeMode.setName("建模");
         JDialog dialog = GUITools.showAsDialog(makeMode, true);
