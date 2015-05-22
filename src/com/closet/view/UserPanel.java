@@ -6,6 +6,9 @@
 package com.closet.view;
 
 import com.closet.model.UserBean;
+import com.closet.util.gui.GUITools;
+import com.closet.util.gui.MyDialog;
+import javax.swing.JScrollBar;
 
 /**
  *
@@ -18,9 +21,18 @@ public class UserPanel extends javax.swing.JPanel {
      */
     public UserPanel() {
         initComponents();
+        JScrollBar bar = jScrollPane1.getVerticalScrollBar();
+        bar.setUnitIncrement(12);
+        reflesh();
+    }
+    
+    private void reflesh() {
+        mainPanel.removeAll();
         for(UserBean user : UserBean.getAllUser()){
-            add(new UserItem(user));
+            mainPanel.add(new UserItem(user));
         }
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }
 
     /**
@@ -32,10 +44,44 @@ public class UserPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanel1 = new javax.swing.JPanel();
+        refresh = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        mainPanel = new javax.swing.JPanel();
+
+        setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        refresh.setText("刷新");
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshActionPerformed(evt);
+            }
+        });
+        jPanel1.add(refresh);
+
+        add(jPanel1, java.awt.BorderLayout.NORTH);
+
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        mainPanel.setLayout(new javax.swing.BoxLayout(mainPanel, javax.swing.BoxLayout.PAGE_AXIS));
+        jScrollPane1.setViewportView(mainPanel);
+
+        add(jScrollPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+        reflesh();
+        GUITools.showMessage(null, "刷新成功");
+    }//GEN-LAST:event_refreshActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JButton refresh;
     // End of variables declaration//GEN-END:variables
+
 }

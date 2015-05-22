@@ -8,7 +8,6 @@ package com.closet.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import javax.swing.JScrollBar;
 
 /**
  *
@@ -21,9 +20,7 @@ public class VirtualCloset extends javax.swing.JFrame {
      */
     public VirtualCloset() {
         initComponents();
-        centerPanel.add(new UserPanel(), BorderLayout.CENTER);
-        JScrollBar bar = jScrollPane1.getVerticalScrollBar();
-        bar.setUnitIncrement(12);
+        add(new UserPanel(), BorderLayout.CENTER);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screenSize.width-getPreferredSize().width)/2, (screenSize.height-getPreferredSize().height)/2);
     }
@@ -37,18 +34,8 @@ public class VirtualCloset extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        centerPanel = new javax.swing.JPanel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
-
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        centerPanel.setLayout(new java.awt.BorderLayout());
-        jScrollPane1.setViewportView(centerPanel);
-
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -77,7 +64,5 @@ public class VirtualCloset extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel centerPanel;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

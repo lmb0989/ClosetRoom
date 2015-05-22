@@ -81,7 +81,7 @@ public class ModePanelItem extends javax.swing.JPanel {
             toPanel.setToolTipText("点击更换模型");
             toPanel.validate();
             toPanel.repaint();
-            new MyDialog(null, "更换成功");
+            GUITools.showMessage(null, "更换成功");
         }
     }
 

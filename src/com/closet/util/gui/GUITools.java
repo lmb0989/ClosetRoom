@@ -26,7 +26,6 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -450,4 +449,13 @@ public class GUITools {
         }
         return null;
     }
+    
+    public static void showMessage(final JFrame parentJFrame, final String message){
+        new Thread(){
+            public void run(){
+                new MyDialog(parentJFrame, message);
+            }
+        }.start();
+    }
+    
 }

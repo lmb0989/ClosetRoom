@@ -741,7 +741,7 @@ public class MakeVideoPanel extends javax.swing.JPanel {
                 }
                 FileUtil.copy((new File(DBConfig.imageLocation+"/"+image.fileName)), saveFile);
             }
-            new MyDialog(null, "导出成功");
+            GUITools.showMessage(null, "导出成功");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -819,9 +819,9 @@ public class MakeVideoPanel extends javax.swing.JPanel {
                     image.videoIDS.add(videoId);
                     image.update("videoids", StringUtil.list2String(image.videoIDS, "v"));
                 }
-                new MyDialog(null, "添加成功");
+                GUITools.showMessage(null, "添加成功");
             }else{
-                new MyDialog(null, "添加失败");
+                GUITools.showMessage(null, "添加失败");
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
